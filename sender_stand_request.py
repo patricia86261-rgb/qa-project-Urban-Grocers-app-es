@@ -1,19 +1,23 @@
-import configuration
 import data
 import requests
+import configuration
 
-def get_docs():
-    return requests.get(configuration.URL_SERVICE + configuration.CREATE_USER_PATH)
-
-def post_new_user(body):
+def post_new_user(user_body):
          return requests.post(configuration.URL_SERVICE + configuration.CREATE_USER_PATH,
-                              json=body,
-                              headers=data.header)
+                              json=user_body,
+                       headers=data.headers)
 
-def post_new_client_kit(kit_body):
-    return requests.post( configuration.URL_SERVICE + configuration.KITS_PATH,
-                          json=kit_body,
-                          headers=data.header)
+
+def post_new_client_kit(kit_body,auth_token):
+    curren_header = data.headers.copy()
+    curren_header["Authorization"] = "Bearer " + auth_token
+    return requests.post(configuration.URL_SERVICE + configuration.KITS_PATH,
+                         json=kit_body,
+                         headers=curren_header)
+
+post_new_client_kit(data.kit_body, auth_token="3d53e84a-2d09-4348-894a-d64c0887156a")
+
+
 
 
 
